@@ -2469,24 +2469,24 @@ export default function AdmissionForm() {
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
- const { initializePayment } = usePaystack({
-  email: formData.guardian1.email,
-  amount: 250000,
-  fullName: `${formData.student.firstName} ${formData.student.lastName}`,
-  onSuccess: async (reference) => {
-    console.log(reference);
+  const { initializePayment } = usePaystack({
+    email: formData.guardian1.email,
+    amount: 250000,
+    fullName: `${formData.student.firstName} ${formData.student.lastName}`,
+    onSuccess: async (reference) => {
+      console.log(reference);
 
-    // Submit your application here
-    // await handleSubmit();
+      // Submit your application here
+      // await handleSubmit();
       setSubmitting(false);
-    setSubmitted(true);
-    setDirty(false);
-    setToast({
-      type: "success",
-      message: "Application submitted successfully.",
-    });
-  },
-});
+      setSubmitted(true);
+      setDirty(false);
+      setToast({
+        type: "success",
+        message: "Application submitted successfully.",
+      });
+    },
+  });
 
   const handleSubmit = async () => {
     const errs = runValidation("consent");
@@ -2500,9 +2500,8 @@ export default function AdmissionForm() {
     }
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 1400));
-    initializePayment()
+    initializePayment();
   };
-
 
   if (submitted) {
     return (
