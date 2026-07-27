@@ -422,10 +422,10 @@ function validateMontessori(d: any, track: any) {
   if (track !== "montessori") return {};
   const e: any = {};
   if (!d.attendedBefore) e.attendedBefore = "Please answer this question.";
-//   if (!d.interest.trim() || d.interest.trim().length < 10)
-//     e.interest = "Please share a bit more (10+ characters).";
-//   if (!d.strengths.trim() || d.strengths.trim().length < 10)
-//     e.strengths = "Please share a bit more (10+ characters).";
+  //   if (!d.interest.trim() || d.interest.trim().length < 10)
+  //     e.interest = "Please share a bit more (10+ characters).";
+  //   if (!d.strengths.trim() || d.strengths.trim().length < 10)
+  //     e.strengths = "Please share a bit more (10+ characters).";
   return e;
 }
 
@@ -808,7 +808,7 @@ function DateField({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  const monthLabel = viewDate.toLocaleDateString("en-US", {
+  const monthLabel = viewDate.toLocaleDateString("en-NG", {
     month: "long",
     year: "numeric",
   });
@@ -824,14 +824,25 @@ function DateField({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  const selectDay = (day: any) => {
+  //   const selectDay = (day: any) => {
+  //     const d = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
+  //     onChange(d.toISOString().slice(0, 10));
+  //     setOpen(false);
+  //   };
+
+  const selectDay = (day: number) => {
     const d = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
-    onChange(d.toISOString().slice(0, 10));
+
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const date = String(d.getDate()).padStart(2, "0");
+
+    onChange(`${year}-${month}-${date}`);
     setOpen(false);
   };
 
   const display = value
-    ? new Date(value + "T00:00:00").toLocaleDateString("en-US", {
+    ? new Date(value + "T00:00:00").toLocaleDateString("en-NG", {
         month: "long",
         day: "numeric",
         year: "numeric",
