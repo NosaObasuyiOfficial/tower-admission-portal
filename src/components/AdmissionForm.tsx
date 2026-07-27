@@ -66,7 +66,7 @@ const Tokens = () => (
       background: var(--parchment);
     }
     .tpa-root * { box-sizing: border-box; }
-    .tpa-serif { font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+    .tpa-serif { font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: -0.01em; font-size: 18px; }
     .tpa-scroll::-webkit-scrollbar { width: 6px; }
     .tpa-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
  
@@ -76,7 +76,13 @@ const Tokens = () => (
       border-radius: 20px;
       box-shadow: 0 1px 2px rgba(22,33,62,0.04), 0 12px 32px -16px rgba(22,33,62,0.12);
     }
- 
+
+    @media (max-width: 425px) {
+      .tpa-serif {
+       font-size: 25px;
+      }
+    }
+
     .tpa-input {
       width: 100%;
       background: var(--paper);
