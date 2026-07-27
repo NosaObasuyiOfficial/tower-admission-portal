@@ -43,7 +43,7 @@ function AdmissionPage() {
                     <div className="flex flex-nowrap gap-1 pl-2 items-center">
                       <Mail size={18} />
                       <p className="leading-5 md:leading-6">
-                        towerpreparatoryacademy@gmail.com
+                        towerprepacademyofficial@gmail.com
                       </p>
                     </div>
                   </div>
