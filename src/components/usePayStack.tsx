@@ -42,7 +42,7 @@ export function usePaystack({
     }
 
     const handler = window.PaystackPop.setup({
-      key: PAYSTACK_PUBLIC_KEY,
+      key: PAYSTACK_PUBLIC_KEY || "pk_test_6beb413cae462d031df1a37a8e899c9fcc3f7142",
       email,
       amount,
       firstname: fullName.split(" ")[0],

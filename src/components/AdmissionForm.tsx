@@ -2471,7 +2471,7 @@ export default function AdmissionForm() {
 
   const { initializePayment } = usePaystack({
     email: formData.guardian1.email,
-    amount: 250000,
+    amount: 500000,
     fullName: `${formData.student.firstName} ${formData.student.lastName}`,
     onSuccess: async (reference) => {
       console.log(reference);
