@@ -32,6 +32,7 @@ import {
   User2Icon,
   //   School,
 } from "lucide-react";
+import { usePaystack } from "./usePayStack";
 
 /* =============================================================================
    DESIGN TOKENS
@@ -2468,6 +2469,25 @@ export default function AdmissionForm() {
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+ const { initializePayment } = usePaystack({
+  email: formData.guardian1.email,
+  amount: 250000,
+  fullName: `${formData.student.firstName} ${formData.student.lastName}`,
+  onSuccess: async (reference) => {
+    console.log(reference);
+
+    // Submit your application here
+    // await handleSubmit();
+      setSubmitting(false);
+    setSubmitted(true);
+    setDirty(false);
+    setToast({
+      type: "success",
+      message: "Application submitted successfully.",
+    });
+  },
+});
+
   const handleSubmit = async () => {
     const errs = runValidation("consent");
     if (Object.keys(errs).length > 0) {
@@ -2480,14 +2500,9 @@ export default function AdmissionForm() {
     }
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 1400));
-    setSubmitting(false);
-    setSubmitted(true);
-    setDirty(false);
-    setToast({
-      type: "success",
-      message: "Application submitted successfully.",
-    });
+    initializePayment()
   };
+
 
   if (submitted) {
     return (
