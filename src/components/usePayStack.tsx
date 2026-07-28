@@ -59,7 +59,7 @@ export function usePaystack({
         email,
         fullName,
       });
-    
+
       const payment = res.data;
 
       if (res.status !== 200) {
@@ -67,9 +67,7 @@ export function usePaystack({
       }
 
       const handler = window.PaystackPop.setup({
-        key:
-          PAYSTACK_PUBLIC_KEY ||
-          "pk_test_6beb413cae462d031df1a37a8e899c9fcc3f7142",
+        key: PAYSTACK_PUBLIC_KEY!,
         access_code: payment.access_code,
         email,
         amount: payment.amount,
@@ -95,4 +93,3 @@ export function usePaystack({
 
   return { initializePayment };
 }
-
