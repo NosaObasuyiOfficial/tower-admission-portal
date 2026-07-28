@@ -33,6 +33,7 @@ import {
   //   School,
 } from "lucide-react";
 import { usePaystack } from "./usePayStack";
+import { apiClient } from "../service/apiClient";
 
 /* =============================================================================
    DESIGN TOKENS
@@ -2471,13 +2472,15 @@ export default function AdmissionForm() {
 
   const { initializePayment } = usePaystack({
     email: formData.guardian1.email,
-    amount: 500000,
     fullName: `${formData.student.firstName} ${formData.student.lastName}`,
     onSuccess: async (reference) => {
-      console.log(reference);
+        const registrationPayload = {
+        reference,
+        payload: formData
+    }
+      const res: any = await apiClient.post("/portal/admission", registrationPayload);
+      console.log(res);
 
-      // Submit your application here
-      // await handleSubmit();
       setSubmitting(false);
       setSubmitted(true);
       setDirty(false);
@@ -2485,6 +2488,9 @@ export default function AdmissionForm() {
         type: "success",
         message: "Application submitted successfully.",
       });
+    },
+    onClose: () => {
+      setSubmitting(false);
     },
   });
 
@@ -2530,8 +2536,11 @@ export default function AdmissionForm() {
             </span>
             .
           </p>
-          <p className="text-sm mb-7" style={{ color: "var(--slate)" }}>
+          <p className="text-sm" style={{ color: "var(--slate)" }}>
             Our admissions team will reach out within 2 business days.
+          </p>
+          <p className="text-sm mt-2 pb-7" style={{ color: "var(--brass)" }}>
+            {`Check your email - ${formData.guardian1.email} for admission update.`}
           </p>
           <button className="tpa-btn-primary" onClick={() => window.print()}>
             <Printer size={15} /> Print confirmation

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
+import { apiClient } from "../service/apiClient";
 
 declare global {
   interface Window {
@@ -11,7 +12,6 @@ const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
 interface UsePaystackProps {
   email: string;
-  amount: number;
   fullName: string;
   onSuccess: (reference: string) => void;
   onClose?: () => void;
@@ -19,7 +19,6 @@ interface UsePaystackProps {
 
 export function usePaystack({
   email,
-  amount,
   fullName,
   onSuccess,
   onClose,
@@ -35,32 +34,65 @@ export function usePaystack({
     document.body.appendChild(script);
   }, []);
 
-  const initializePayment = () => {
-    if (!window.PaystackPop) {
-      alert("Paystack failed to load.");
-      return;
+  const verifyPayment = async (reference: string) => {
+    try {
+      const res: any = await apiClient.get(
+        `/portal/payments/verify/${reference}`,
+      );
+
+      const result = res.data;
+
+      if (!result.success) {
+        alert("Payment verification failed.");
+        return;
+      }
+
+      onSuccess(reference);
+    } catch (err) {
+      console.error(err);
     }
+  };
 
-    const handler = window.PaystackPop.setup({
-      key: PAYSTACK_PUBLIC_KEY || "pk_test_6beb413cae462d031df1a37a8e899c9fcc3f7142",
-      email,
-      amount,
-      firstname: fullName.split(" ")[0],
-      lastname: fullName.split(" ").slice(1).join(" "),
-      ref: `TPA-${Date.now()}`,
-      currency: "NGN",
+  const initializePayment = async () => {
+    try {
+      const res: any = await apiClient.post("/portal/payments/initialize", {
+        email,
+        fullName,
+      });
+    
+      const payment = res.data;
 
-      callback: (response: any) => {
-        onSuccess(response.reference);
-      },
+      if (res.status !== 200) {
+        throw new Error("Unable to initialize payment");
+      }
 
-      onClose: () => {
-        onClose?.();
-      },
-    });
+      const handler = window.PaystackPop.setup({
+        key:
+          PAYSTACK_PUBLIC_KEY ||
+          "pk_test_6beb413cae462d031df1a37a8e899c9fcc3f7142",
+        access_code: payment.access_code,
+        email,
+        amount: payment.amount,
+        firstname: fullName.split(" ")[0],
+        lastname: fullName.split(" ").slice(1).join(" "),
+        ref: payment.reference,
+        currency: "NGN",
 
-    handler.openIframe();
+        callback: function (response: any) {
+          verifyPayment(response.reference);
+        },
+
+        onClose: () => {
+          onClose?.();
+        },
+      });
+
+      handler.openIframe();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return { initializePayment };
 }
+
