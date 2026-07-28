@@ -13,7 +13,7 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-      config.headers["portal-key"] = "tower123";
+      config.headers["portal-key"] = import.meta.env.PORTAL_KEY!;
 
     return config;
   },
