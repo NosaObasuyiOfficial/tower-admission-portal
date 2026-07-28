@@ -2,6 +2,7 @@ import axios, {
   type AxiosInstance
 } from "axios";
 
+
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL!,
   timeout: 30000,
@@ -13,7 +14,7 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-      config.headers["portal-key"] = import.meta.env.PORTAL_KEY!;
+      config.headers["portal-key"] = import.meta.env.VITE_PORTAL_KEY!;
 
     return config;
   },
