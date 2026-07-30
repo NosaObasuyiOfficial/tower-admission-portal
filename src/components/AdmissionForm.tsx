@@ -41,7 +41,7 @@ import { apiClient } from "../service/apiClient";
    Display serif (Fraunces) for gravitas, Inter for the working UI.
    ============================================================================= */
 
-const Tokens = () => (
+export const Tokens = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
  
@@ -2192,14 +2192,14 @@ function StepConsent({ data, setField, errors }: any) {
 /* =============================================================================
    REVIEW STEP
    ============================================================================= */
-function ReviewRow({ label, value }: any) {
+export function ReviewRow({ label, value }: any) {
   return (
     <div className="flex justify-between gap-4 py-1.5 text-sm">
       <p style={{ color: "var(--slate)" }} className="font-poppinsRegular!">
         {label}
       </p>
       <span className="text-right font-medium" style={{ color: "var(--ink)" }}>
-        {value || "\u2014"}
+        {value || ""}
       </span>
     </div>
   );
@@ -2478,8 +2478,7 @@ export default function AdmissionForm() {
         reference,
         payload: formData
     }
-      const res: any = await apiClient.post("/portal/admission", registrationPayload);
-      console.log(res);
+      await apiClient.post("/portal/admission", registrationPayload);
 
       setSubmitting(false);
       setSubmitted(true);
