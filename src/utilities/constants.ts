@@ -4,7 +4,7 @@ export const GRADE_OPTIONS = [
   { value: "toddler", label: "Toddler" },
   { value: "nursery-one", label: "Nursery 1" },
   { value: "nursery-two", label: "Nursery 2" },
-  { value: "Nursery-three", label: "Nursery 3" },
+  { value: "nursery-three", label: "Nursery 3" },
   { value: "primary-one", label: "Primary 1" },
 ];
 
