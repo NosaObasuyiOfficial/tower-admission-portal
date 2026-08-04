@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
   User,
   MapPin,
@@ -21,7 +21,6 @@ import {
   Users,
   Home,
   AlertCircle,
-  // Wallet,
   Receipt,
   Inbox,
 } from "lucide-react";
