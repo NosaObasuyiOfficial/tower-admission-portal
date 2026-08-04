@@ -46,6 +46,7 @@ import {
   RELATION_OPTIONS,
   initialFormData,
 } from "../utilities/constants";
+import useAppNavigate from "./useAppNavigate";
 
 /* =============================================================================
    DESIGN TOKENS
@@ -2337,6 +2338,7 @@ export default function AdmissionForm() {
   const [dirty, setDirty] = useState(false);
   const saveTimer = useRef<any | null>(null);
   const topRef = useRef<any | null>(null);
+  const { goTo } = useAppNavigate();
 
   const activeSteps = useMemo(
     () =>
@@ -2520,7 +2522,7 @@ export default function AdmissionForm() {
       <div className="w-full flex justify-end">
         <button
           type="button"
-          onClick={() => console.log("asas")}
+          onClick={() => goTo("/student/portal")}
           className="tpa-btn-portal"
         >
           Log in Student Portal <MoveRightIcon size={15} />
