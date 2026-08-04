@@ -1,11 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import AdmissionPage from "../pages/AdmissionPage";
 import AdmissionAcceptancePage from "../pages/AdmissionAcceptancePage";
+import StudentDataPage from "../pages/StudentDataPage";
+import StudentPortalPage from "../pages/StudentPortalPage";
 
 function portalRoutes() {
   return (
     <Routes>
       <Route path="/admission-portal" element={<AdmissionPage />} />
+      <Route path="/student/data-page" element={<StudentDataPage />} />
+      <Route path="/student/portal" element={<StudentPortalPage />} />
       <Route path="/admission-acceptance-portal/987623628237/toweradmissionscenter/:admissionNo" element={<AdmissionAcceptancePage />} />
     </Routes>
   );
