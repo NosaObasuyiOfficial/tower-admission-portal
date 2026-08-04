@@ -30,11 +30,22 @@ import {
   Printer,
   CalendarDaysIcon,
   User2Icon,
+  MoveRightIcon,
   //   School,
 } from "lucide-react";
 import { usePaystack } from "./usePayStack";
 import { apiClient } from "../service/apiClient";
-import { UPLOAD_SPECS, ACCEPTED_TYPES, MAX_FILE_MB, ACADEMIC_YEARS, GRADE_OPTIONS, CITIES, US_STATES, RELATION_OPTIONS, initialFormData } from "../utilities/constants";
+import {
+  UPLOAD_SPECS,
+  ACCEPTED_TYPES,
+  MAX_FILE_MB,
+  ACADEMIC_YEARS,
+  GRADE_OPTIONS,
+  CITIES,
+  US_STATES,
+  RELATION_OPTIONS,
+  initialFormData,
+} from "../utilities/constants";
 
 /* =============================================================================
    DESIGN TOKENS
@@ -47,9 +58,9 @@ export const Tokens = () => (
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
  
     .tpa-root {
-      --navy: #16213E;
+      --navy: #363737;
       --navy-deep: #0E1730;
-      --navy-soft: #2A3A63;
+      --navy-soft: #82868a;
       --brass: #3E424D;
       --brass-light: #3E424D;
       --brass-pale: #B6B9C0;
@@ -125,6 +136,18 @@ export const Tokens = () => (
     .tpa-field.tpa-filled.tpa-error .tpa-label-float,
     .tpa-field.tpa-focused.tpa-error .tpa-label-float { color: var(--error); }
  
+  .tpa-btn-portal {
+      color: var(--navy);
+      border-radius: 12px;
+      font-weight: 400;
+      font-size: 14.5px;
+      padding: 12px 22px;
+      transition: background 160ms ease, transform 120ms ease;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: none; cursor: pointer;
+    }
+    .tpa-btn-portal:hover:not(:disabled) { font-weight: 800; }
+
     .tpa-btn-primary {
       background: var(--navy);
       color: #fff;
@@ -2410,10 +2433,10 @@ export default function AdmissionForm() {
     email: formData.guardian1.email,
     fullName: `${formData.student.firstName} ${formData.student.lastName}`,
     onSuccess: async (reference) => {
-        const registrationPayload = {
+      const registrationPayload = {
         reference,
-        payload: formData
-    }
+        payload: formData,
+      };
       await apiClient.post("/portal/admission", registrationPayload);
 
       setSubmitting(false);
@@ -2493,6 +2516,17 @@ export default function AdmissionForm() {
     <div className="tpa-root min-h-screen">
       <Tokens />
       <div ref={topRef} />
+
+      <div className="w-full flex justify-end">
+        <button
+          type="button"
+          onClick={() => console.log("asas")}
+          className="tpa-btn-portal"
+        >
+          Log in Student Portal <MoveRightIcon size={15} />
+        </button>
+      </div>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex gap-12">
         <VerticalStepper
           steps={activeSteps}
@@ -2518,6 +2552,7 @@ export default function AdmissionForm() {
               </p> */}
 
               <div>
+            
                 {/* <p className="tpa-serif text-sm font-semibold leading-tight" style={{ color: "var(--navy)" }}>Tower Preparatory</p>
             <p className="text-xs" style={{ color: "var(--slate)" }}>Academy</p> */}
                 <p className="tpa-serif font-light leading-tight">
