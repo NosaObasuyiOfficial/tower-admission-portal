@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useCallback } from "react";
@@ -185,7 +186,6 @@ function useForm({ defaultValues = {}, mode = "onBlur" } = {}) {
           validateField(name, e.target.value, rules);
         },
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [values, touched],
   );

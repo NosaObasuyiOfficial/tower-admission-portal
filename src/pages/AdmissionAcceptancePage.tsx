@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { Printer, ClipboardCheck, Check, Loader2 } from "lucide-react";
+import { Printer, ClipboardCheck, Check } from "lucide-react";
 import { ReviewRow, SectionCard, Tokens } from "../components/AdmissionForm";
 import { GRADE_OPTIONS, UPLOAD_SPECS } from "../utilities/constants";
 import Logo from "../assets/images/towerlogo.png";
 import { apiClient } from "../service/apiClient";
 import { useParams } from "react-router-dom";
 import { transformData } from "../utilities/helperFunction";
+import FallbackLoad from "../components/FallBackLoad";
 
 function ReviewSection({ title, children }: any) {
   return (
@@ -60,17 +62,19 @@ function AdmissionAcceptancePage() {
 
   if (loading) {
     return (
-      <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
-        <Loader2 size={15} className="animate-spin" /> Loading application...
-      </div>
+      // <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
+      //   <Loader2 size={15} className="animate-spin" /> Loading application...
+      // </div>
+      <FallbackLoad />
     );
   }
 
   if (error) {
     return (
-      <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
-        {error} <Loader2 size={15} className="animate-spin" /> Reloading...
-      </div>
+      // <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
+      //   {error} <Loader2 size={15} className="animate-spin" /> Reloading...
+      // </div>
+      <FallbackLoad />
     );
   }
 

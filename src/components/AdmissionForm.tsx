@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -137,17 +143,57 @@ export const Tokens = () => (
     .tpa-field.tpa-filled.tpa-error .tpa-label-float,
     .tpa-field.tpa-focused.tpa-error .tpa-label-float { color: var(--error); }
  
-  .tpa-btn-portal {
-      color: var(--navy);
-      border-radius: 12px;
-      font-weight: 400;
-      font-size: 14.5px;
-      padding: 12px 22px;
-      transition: background 160ms ease, transform 120ms ease;
-      display: inline-flex; align-items: center; gap: 8px;
-      border: none; cursor: pointer;
-    }
-    .tpa-btn-portal:hover:not(:disabled) { font-weight: 800; }
+.tpa-btn-portal {
+  position: relative;
+  color: var(--navy);
+  border-radius: 0px;
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 12px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate; /* keeps the sweep contained to this button's stacking context */
+  transition: color 240ms cubic-bezier(.22,.68,0,1), box-shadow 240ms ease;
+}
+
+/* the sweeping fill */
+.tpa-btn-portal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: -1;
+  transition: transform 340ms cubic-bezier(.22,.68,0,1);
+}
+
+.tpa-btn-portal:hover:not(:disabled)::before {
+  transform: scaleX(1);
+}
+
+.tpa-btn-portal:hover:not(:disabled) {
+  color: #fff;
+  box-shadow: 0 8px 20px -8px rgba(22,33,62,0.35);
+}
+
+/* icon nudges forward on hover, independent of the text */
+.tpa-btn-portal svg {
+  transition: transform 300ms cubic-bezier(.34,1.3,.64,1);
+}
+.tpa-btn-portal:hover:not(:disabled) svg {
+  transform: translateX(4px);
+}
+
+.tpa-btn-portal:active:not(:disabled) {
+  transform: scale(0.98);
+}
 
     .tpa-btn-primary {
       background: var(--navy);
@@ -2527,6 +2573,7 @@ export default function AdmissionForm() {
         >
           Log in Student Portal <MoveRightIcon size={15} />
         </button>
+
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex gap-12">
@@ -2554,7 +2601,6 @@ export default function AdmissionForm() {
               </p> */}
 
               <div>
-            
                 {/* <p className="tpa-serif text-sm font-semibold leading-tight" style={{ color: "var(--navy)" }}>Tower Preparatory</p>
             <p className="text-xs" style={{ color: "var(--slate)" }}>Academy</p> */}
                 <p className="tpa-serif font-light leading-tight">
