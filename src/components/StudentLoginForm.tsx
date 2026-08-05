@@ -353,6 +353,7 @@ export default function StudentLoginForm({ onLogin }: any) {
                 type="text"
                 autoComplete="username"
                 inputMode="text"
+                placeholder="Student ID"
                 spellCheck={false}
                 {...studentIdField}
                 className={`tpa-input ${errors.studentId ? "tpa-input-error" : ""}`}
@@ -396,6 +397,7 @@ export default function StudentLoginForm({ onLogin }: any) {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 {...passwordField}
+                placeholder="Password"
                 className={`tpa-input ${errors.password ? "tpa-input-error" : ""}`}
                 style={{ paddingLeft: 36, paddingRight: 42 }}
                 aria-invalid={!!errors.password}
