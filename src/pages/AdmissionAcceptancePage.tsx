@@ -61,29 +61,15 @@ function AdmissionAcceptancePage() {
   };
 
   if (loading) {
-    return (
-      // <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
-      //   <Loader2 size={15} className="animate-spin" /> Loading application...
-      // </div>
-      <FallbackLoad />
-    );
+    return <FallbackLoad />;
   }
 
   if (error) {
-    return (
-      // <div className="w-full h-full flex gap-2 items-center justify-center p-2.5">
-      //   {error} <Loader2 size={15} className="animate-spin" /> Reloading...
-      // </div>
-      <FallbackLoad />
-    );
+    return <FallbackLoad />;
   }
 
   if (!g) {
-    return (
-      <div className="w-full h-full flex items-center justify-center p-2.5">
-        No application found.
-      </div>
-    );
+    return <FallbackLoad />;
   }
 
   const gradeLabel = GRADE_OPTIONS.find(
