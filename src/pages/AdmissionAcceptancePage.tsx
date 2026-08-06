@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { Printer, ClipboardCheck, Check } from "lucide-react";
+import { Printer, ClipboardCheck, Check, Loader2 } from "lucide-react";
 import { ReviewRow, SectionCard, Tokens } from "../components/AdmissionForm";
 import { GRADE_OPTIONS, UPLOAD_SPECS } from "../utilities/constants";
 import Logo from "../assets/images/towerlogo.png";
@@ -28,6 +28,7 @@ function AdmissionAcceptancePage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
   const { admissionNo } = useParams();
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchApplication = async () => {
@@ -208,9 +209,27 @@ function AdmissionAcceptancePage() {
             <button
               type="button"
               // onClick={}
-              className="tpa-btn-primary tpa-no-print"
+              onClick={() => setSubmitting(true)}
+              className={`tpa-no-print ${g.status === "submitted" ? "tpa-btn-primary" : ""}`}
             >
-              Accept Application <Check size={15} />
+              {submitting ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" /> Accepting
+                  Application
+                </>
+              ) : (
+                <div className="flex flex-nowrap gap-1.5 items-center justify-center">
+                  {g.status === "accepted" ? (
+                    <>
+                      Application Accepted <Check size={15} />
+                    </>
+                  ) : (
+                    <>
+                      Accept Application <Check size={15} />
+                    </>
+                  )}
+                </div>
+              )}
             </button>
 
             <button

@@ -26,8 +26,8 @@ import {
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
 
-
-const SCHOOL_TERM = import.meta.env.VITE_SCHOOL_TERM!.split("_").join(" ") ?? "";
+const SCHOOL_TERM =
+  import.meta.env.VITE_SCHOOL_TERM!.split("_").join(" ") ?? "";
 const SCHOOL_YEAR = import.meta.env.VITE_SCHOOL_YEAR! ?? "";
 
 /* =============================================================================
@@ -309,14 +309,48 @@ const SAMPLE_STUDENT: any = {
   updatedAt: "2026-07-30T09:25:11.859Z",
 };
 
-
 const payments = [
-  { id: "1", paymentReference: "TPA-2026-000482", paymentType: "School Fees", paymentAmount: 185000, paymentStatus: "PAID", updatedAt: "2026-08-02T21:24:10.000Z", term: "2nd Term", academicYear: SCHOOL_YEAR  },
-  { id: "2", paymentReference: "TPA-2026-000401", paymentType: "School Fees", paymentAmount: 185000, paymentStatus: "PAID", updatedAt: "2026-04-14T09:02:44.000Z", term: "2nd Term", academicYear: SCHOOL_YEAR  },
-  { id: "3", paymentReference: "TPA-2026-000355", paymentType: "School Fees", paymentAmount: 185000, paymentStatus: "PENDING", updatedAt: "", term: "3rd Term", academicYear: SCHOOL_YEAR  },
-  { id: "4", paymentReference: "TPA-2026-000355", paymentType: "School Fees", paymentAmount: 2000000, paymentStatus: "PAID", updatedAt: "2026-04-14T09:02:44.000Z", term: SCHOOL_TERM, academicYear: SCHOOL_YEAR },
+  {
+    id: "1",
+    paymentReference: "TPA-2026-000482",
+    paymentType: "School Fees",
+    paymentAmount: 185000,
+    paymentStatus: "PAID",
+    updatedAt: "2026-08-02T21:24:10.000Z",
+    term: "2nd Term",
+    academicYear: SCHOOL_YEAR,
+  },
+  {
+    id: "2",
+    paymentReference: "TPA-2026-000401",
+    paymentType: "School Fees",
+    paymentAmount: 185000,
+    paymentStatus: "PAID",
+    updatedAt: "2026-04-14T09:02:44.000Z",
+    term: "2nd Term",
+    academicYear: SCHOOL_YEAR,
+  },
+  {
+    id: "3",
+    paymentReference: "TPA-2026-000355",
+    paymentType: "School Fees",
+    paymentAmount: 185000,
+    paymentStatus: "PENDING",
+    updatedAt: "",
+    term: "3rd Term",
+    academicYear: SCHOOL_YEAR,
+  },
+  {
+    id: "4",
+    paymentReference: "TPA-2026-000355",
+    paymentType: "School Fees",
+    paymentAmount: 2000000,
+    paymentStatus: "PAID",
+    updatedAt: "2026-04-14T09:02:44.000Z",
+    term: SCHOOL_TERM,
+    academicYear: SCHOOL_YEAR,
+  },
 ];
- 
 
 /* =============================================================================
    HELPERS
@@ -368,20 +402,40 @@ const STATUS_CONFIG: any = {
   rejected: { label: "Rejected", bg: "var(--error-bg)", fg: "var(--error)" },
 };
 
-const PAYMENT_STATUS_CONFIG:any = {
-  PAID: { label: "Paid", bg: "var(--success-bg)", fg: "var(--success)", icon: CheckCircle2 },
+const PAYMENT_STATUS_CONFIG: any = {
+  PAID: {
+    label: "Paid",
+    bg: "var(--success-bg)",
+    fg: "var(--success)",
+    icon: CheckCircle2,
+  },
   PENDING: { label: "Pending", bg: "#FDF3E4", fg: "#93670F", icon: Clock },
-  FAILED: { label: "Failed", bg: "var(--error-bg)", fg: "var(--error)", icon: XCircle },
+  FAILED: {
+    label: "Failed",
+    bg: "var(--error-bg)",
+    fg: "var(--error)",
+    icon: XCircle,
+  },
 };
- 
-function formatCurrency(amount:any) {
+
+function formatCurrency(amount: any) {
   if (amount === null || amount === undefined) return "\u2014";
-  return new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 }).format(amount/100);
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    maximumFractionDigits: 0,
+  }).format(amount / 100);
 }
- 
-function formatDateTime(iso:any) {
+
+function formatDateTime(iso: any) {
   if (!iso) return "\u2014";
-  return new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  return new Date(iso).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
 }
 
 const UPLOAD_LABELS = {
@@ -487,24 +541,39 @@ function DocRow({ label, file }: any) {
   );
 }
 
-
-function PaymentHistoryTable({ payments }:any) {
+function PaymentHistoryTable({ payments }: any) {
   // const totalPaid = payments
   //   .filter((p:any) => (p.paymentStatus || "").toUpperCase() === "PAID")
   //   .reduce((sum:any, p:any) => sum + (p.paymentAmount || 0), 0);
- 
+
+  const handlePayFees = () => {
+    console.log("Pay School Fees clicked for");
+  };
+
   if (!payments || payments.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-10">
-        <div className="rounded-full flex items-center justify-center mb-3" style={{ width: 44, height: 44, background: "var(--border-soft)", color: "var(--slate-light)" }}>
+        <div
+          className="rounded-full flex items-center justify-center mb-3"
+          style={{
+            width: 44,
+            height: 44,
+            background: "var(--border-soft)",
+            color: "var(--slate-light)",
+          }}
+        >
           <Inbox size={20} />
         </div>
-        <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>No payments recorded yet</p>
-        <p className="text-xs mt-1" style={{ color: "var(--slate)" }}>School fee payments will appear here once made.</p>
+        <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+          No payments recorded yet
+        </p>
+        <p className="text-xs mt-1" style={{ color: "var(--slate)" }}>
+          School fee payments will appear here once made.
+        </p>
       </div>
     );
   }
- 
+
   return (
     <div>
       {/* <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
@@ -514,55 +583,127 @@ function PaymentHistoryTable({ payments }:any) {
           <span className="text-sm font-bold" style={{ color: "var(--navy)" }}>{formatCurrency(totalPaid)}</span>
         </div>
       </div> */}
- 
-      <div className="tpa-scroll" style={{ overflowX: "auto", borderRadius: 14, border: "1px solid var(--border-soft)" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 620 }}>
+
+      <div className="flex justify-end mb-3">
+        {SAMPLE_STUDENT.status === "accepted" ? (
+          <div className="tpa-no-print">
+            <button
+              type="button"
+              onClick={handlePayFees}
+              disabled={SAMPLE_STUDENT.status === "accepted" ? false : true}
+              className="tpa-btn-primary"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              <CreditCard size={15} /> Pay School Fees
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      <div
+        className="tpa-scroll"
+        style={{
+          overflowX: "auto",
+          borderRadius: 14,
+          border: "1px solid var(--border-soft)",
+        }}
+      >
+        <table
+          style={{ width: "100%", borderCollapse: "collapse", minWidth: 620 }}
+        >
           <thead>
-            <tr style={{ background: "#FAFAFA", borderBottom: "1px solid var(--border-soft)" }}>
-              {["Ref No.", "Payment Type", "Date", "Amount", "Status"].map((h, i) => (
-                <th
-                  key={h}
-                  style={{
-                    textAlign: i === 3 ? "right" : "left",
-                    padding: "12px 16px",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.05em",
-                    textTransform: "uppercase",
-                    color: "var(--slate-light)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {h}
-                </th>
-              ))}
+            <tr
+              style={{
+                background: "#FAFAFA",
+                borderBottom: "1px solid var(--border-soft)",
+              }}
+            >
+              {["Ref No.", "Payment Type", "Date", "Amount", "Status"].map(
+                (h, i) => (
+                  <th
+                    key={h}
+                    style={{
+                      textAlign: i === 3 ? "right" : "left",
+                      padding: "12px 16px",
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                      color: "var(--slate-light)",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {h}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
           <tbody>
-            {payments.map((p:any, idx:any) => {
+            {payments.map((p: any, idx: any) => {
               const status = (p.paymentStatus || "PENDING").toUpperCase();
-              const cfg = PAYMENT_STATUS_CONFIG[status] ?? PAYMENT_STATUS_CONFIG.PENDING;
+              const cfg =
+                PAYMENT_STATUS_CONFIG[status] ?? PAYMENT_STATUS_CONFIG.PENDING;
               const StatusIcon = cfg.icon;
               return (
                 <tr
                   key={p.id ?? idx}
-                  className={`${SCHOOL_TERM=== p.term && p.academicYear === SCHOOL_YEAR ? "" : "tpa-no-print"}`}
-                  style={{ borderBottom: idx < payments.length - 1 ? "1px solid var(--border-soft)" : "none" }}
+                  className={`${SCHOOL_TERM === p.term && p.academicYear === SCHOOL_YEAR ? "" : "tpa-no-print"}`}
+                  style={{
+                    borderBottom:
+                      idx < payments.length - 1
+                        ? "1px solid var(--border-soft)"
+                        : "none",
+                  }}
                 >
-                  <td style={{ padding: "14px 16px", fontFamily: "monospace", fontSize: 13, color: "var(--ink)", whiteSpace: "nowrap" }}>
+                  <td
+                    style={{
+                      padding: "14px 16px",
+                      fontFamily: "monospace",
+                      fontSize: 13,
+                      color: "var(--ink)",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {p.paymentReference || "\u2014"}
                   </td>
-                  <td style={{ padding: "14px 16px", fontSize: 13.5, color: "var(--ink)", fontWeight: 500, whiteSpace: "nowrap" }}>
+                  <td
+                    style={{
+                      padding: "14px 16px",
+                      fontSize: 13.5,
+                      color: "var(--ink)",
+                      fontWeight: 500,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {p.paymentType || "School Fees"}
                   </td>
-                  <td style={{ padding: "14px 16px", fontSize: 13, color: "var(--slate)", whiteSpace: "nowrap" }}>
+                  <td
+                    style={{
+                      padding: "14px 16px",
+                      fontSize: 13,
+                      color: "var(--slate)",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {formatDateTime(p.updatedAt)}
                   </td>
-                  <td style={{ padding: "14px 16px", fontSize: 13.5, color: "var(--ink)", fontWeight: 600, textAlign: "right", whiteSpace: "nowrap" }}>
+                  <td
+                    style={{
+                      padding: "14px 16px",
+                      fontSize: 13.5,
+                      color: "var(--ink)",
+                      fontWeight: 600,
+                      textAlign: "right",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {formatCurrency(p.paymentAmount)}
                   </td>
                   <td style={{ padding: "14px 16px", whiteSpace: "nowrap" }}>
-                    <Pill bg={cfg.bg} fg={cfg.fg}><StatusIcon size={12} /> {cfg.label}</Pill>
+                    <Pill bg={cfg.bg} fg={cfg.fg}>
+                      <StatusIcon size={12} /> {cfg.label}
+                    </Pill>
                   </td>
                 </tr>
               );
@@ -570,7 +711,7 @@ function PaymentHistoryTable({ payments }:any) {
           </tbody>
         </table>
       </div>
- 
+
       {/* <div className="flex justify-end mt-4 tpa-no-print">
         <button type="button" onClick={onPayFees} className="tpa-btn-ghost">
           <CreditCard size={14} /> Make a Payment
@@ -579,7 +720,6 @@ function PaymentHistoryTable({ payments }:any) {
     </div>
   );
 }
- 
 
 /* =============================================================================
    MAIN PAGE
@@ -707,11 +847,10 @@ export default function StudentDataPage({
                 <button
                   type="button"
                   onClick={handlePayFees}
-                  disabled={data.status === "accepted" ? false : true}
+                  disabled={data.status === "accepted" ? true : true}
                   className="tpa-btn-primary"
                   style={{ whiteSpace: "nowrap" }}
-                >
-                  <CreditCard size={15} /> Pay School Fees
+                > Academic portal
                 </button>
               </div>
             ) : null}
@@ -941,10 +1080,12 @@ export default function StudentDataPage({
           </div>
         </div>
 
-
-              <div className="mt-6">
+        <div className="mt-6">
           <SectionCard icon={Receipt} title="Payment History">
-            <PaymentHistoryTable payments={payments} onPayFees={handlePayFees} />
+            <PaymentHistoryTable
+              payments={payments}
+              onPayFees={handlePayFees}
+            />
           </SectionCard>
         </div>
 

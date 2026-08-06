@@ -107,6 +107,8 @@ export const transformData = (apiData: any) => {
       signatureTypedName: apiData.signatureTypedName ?? "yes",
       signatureDate: apiData.signatureDate,
     },
+
+    status: apiData.status,
   };
 
   return transformedData;
