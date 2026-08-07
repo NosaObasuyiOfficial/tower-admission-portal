@@ -739,7 +739,7 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
         setLoading(true);
 
         const res: any = await apiClient.get(
-          `/portal/application/${studentDataId}`,
+          `/student/data/${studentDataId}`,
         );
 
         if (res.data.success) {
