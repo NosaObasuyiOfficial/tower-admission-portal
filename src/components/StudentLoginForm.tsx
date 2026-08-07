@@ -268,8 +268,7 @@ export default function StudentLoginForm({ onLogin }: any) {
         await new Promise((resolve) => setTimeout(resolve, 1200));
         // console.log("Login submitted:", { ...values, rememberMe });
                
-        const rv = await apiClient.post("/portal/auth/login", values);
-        
+        const rv = await apiClient.post("/portal/auth/login", values);       
         console.log(rv);
 
       }
