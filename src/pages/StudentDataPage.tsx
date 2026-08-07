@@ -762,9 +762,9 @@ export default function StudentDataPage({
               className="rounded-lg flex items-center justify-center"
               style={{ width: 64, height: 64 }}
             >
-              {/* <GraduationCap size={16} color="var(--brass-pale)" /> */}
+
               <img
-                className="w-12 h-12 bg-white rounded-full"
+                className="w-13 h-13 bg-white rounded-full"
                 src={Logo}
                 alt="Tower Logo"
               />
@@ -772,7 +772,7 @@ export default function StudentDataPage({
             <div>
               <p
                 className="tpa-serif"
-                style={{ fontSize: 17, color: "var(--navy)" }}
+                style={{ fontSize: 20, color: "var(--navy)" }}
               >
                 Tower Preparatory Academy
               </p>
