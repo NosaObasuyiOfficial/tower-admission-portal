@@ -792,14 +792,14 @@ export default function StudentDataPage({
 
         {/* Hero */}
         <div className="tpa-card tpa-anim-enter p-6 sm:p-8 mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
             <div className="tpa-avatar">
               {initials(data.studentFirstName, data.studentLastName)}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2.5 mb-2">
                 <h1
-                  className="tpa-serif"
+                  className="tpa-serif leading-4"
                   style={{ fontSize: 22, color: "var(--navy)" }}
                 >
                   {fullName}
@@ -843,7 +843,7 @@ export default function StudentDataPage({
               </div>
             </div>
             {data.status === "accepted" ? (
-              <div className="tpa-no-print">
+              <div className="tpa-no-print mt-4">
                 <button
                   type="button"
                   onClick={handlePayFees}
