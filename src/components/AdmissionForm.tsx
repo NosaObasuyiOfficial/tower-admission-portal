@@ -2571,9 +2571,8 @@ export default function AdmissionForm() {
           onClick={() => goTo("/student/portal")}
           className="tpa-btn-portal"
         >
-          Log in Student Portal <MoveRightIcon size={15} />
+         Log in Student Portal <MoveRightIcon size={15} />
         </button>
-
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex gap-12">
@@ -2587,18 +2586,7 @@ export default function AdmissionForm() {
         <div className="flex-1 min-w-0" style={{ maxWidth: 720 }}>
           <div className="flex items-center justify-between mb-5 lg:hidden">
             <div className="flex items-center gap-2">
-              {/* <div
-                className="rounded-lg flex items-center justify-center"
-                style={{ width: 30, height: 30, background: "var(--navy)" }}
-              >
-                <School size={15} color="var(--brass-light)" />
-              </div> */}
-              {/* <p
-                className="tpa-serif text-sm font-semibold"
-                style={{ color: "var(--navy)" }}
-              >
-                Tower Preparatory Academy
-              </p> */}
+     
 
               <div>
                 {/* <p className="tpa-serif text-sm font-semibold leading-tight" style={{ color: "var(--navy)" }}>Tower Preparatory</p>
