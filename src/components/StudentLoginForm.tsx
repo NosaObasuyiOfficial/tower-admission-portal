@@ -273,8 +273,8 @@ export default function StudentLoginForm({ onLogin }: any) {
 
       }
     } catch (err: any) {
-      const message =
-        err?.message || "Invalid Student ID or password. Please try again.";
+      const message:any =
+        err?.message ? "Invalid Student ID or Password. Please try again." : "Invalid Student ID or password. Please try again.";
       setAuthError(message);
       setError("password", { message: " " }); // marks the field as errored without duplicating the banner text
       setShake(true);
