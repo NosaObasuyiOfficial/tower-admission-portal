@@ -12,6 +12,7 @@ import {
   IdCard,
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
+import { apiClient } from "../service/apiClient";
 
 /* =============================================================================
    DESIGN TOKENS (shared with the rest of the Tower Prep portal)
@@ -262,12 +263,15 @@ export default function StudentLoginForm({ onLogin }: any) {
     try {
       if (onLogin) {
         await onLogin({ ...values, rememberMe });
-        console.log(values)
-
       } else {
         // Demo fallback — replace with a real auth call via the onLogin prop.
         await new Promise((resolve) => setTimeout(resolve, 1200));
-        console.log("Login submitted:", { ...values, rememberMe });
+        // console.log("Login submitted:", { ...values, rememberMe });
+               
+        const rv = await apiClient.post("/portal/auth/login", values);
+        
+        console.log(rv);
+
       }
     } catch (err: any) {
       const message =
