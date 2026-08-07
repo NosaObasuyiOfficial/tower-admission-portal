@@ -304,7 +304,7 @@ const SAMPLE_STUDENT: any = {
   signatureTypedName: null,
   signatureImageUr: null,
   signatureDate: "2026-07-30",
-  status: "accepted",
+  status: "submitted",
   createdAt: "2026-07-30T09:25:11.859Z",
   updatedAt: "2026-07-30T09:25:11.859Z",
 };

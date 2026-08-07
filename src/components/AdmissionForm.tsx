@@ -1648,7 +1648,7 @@ function MobileProgress({ steps, activeIndex }: any) {
     <div className="lg:hidden mb-6">
       <div className="flex items-center justify-between mb-2">
         <p
-          className="text-xs font-semibold uppercase tracking-wide"
+          className="text-xs font-semibold tracking-wide"
           style={{ color: "var(--brass)" }}
         >
           Step {activeIndex + 1} of {steps.length}
@@ -2620,7 +2620,7 @@ export default function AdmissionForm() {
 
           <div className="flex items-center justify-between mb-4">
             <p
-              className="text-xs font-semibold uppercase tracking-wide hidden lg:block"
+              className="text-xs font-semibold tracking-wide hidden lg:block"
               //   style={{ color: "var(--brass)" }}
             >
               Step {activeIndex + 1} of {activeSteps.length}
