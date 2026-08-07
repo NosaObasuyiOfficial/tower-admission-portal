@@ -262,6 +262,8 @@ export default function StudentLoginForm({ onLogin }: any) {
     try {
       if (onLogin) {
         await onLogin({ ...values, rememberMe });
+        console.log(values)
+
       } else {
         // Demo fallback — replace with a real auth call via the onLogin prop.
         await new Promise((resolve) => setTimeout(resolve, 1200));
