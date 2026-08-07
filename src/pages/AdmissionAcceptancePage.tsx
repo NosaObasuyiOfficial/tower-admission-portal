@@ -36,7 +36,7 @@ function AdmissionAcceptancePage() {
         setLoading(true);
 
         const res: any = await apiClient.get(
-          `/portal/application/${admissionNo}`,
+          `/portal/student/${admissionNo}`,
         );
 
         if (res.data.success) {
