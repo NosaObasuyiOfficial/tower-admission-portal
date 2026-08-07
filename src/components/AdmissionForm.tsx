@@ -2486,16 +2486,17 @@ export default function AdmissionForm() {
         payload: formData,
       };
 
-      const rv = await apiClient.post("/portal/admission", registrationPayload);
-        console.log(rv.data)
+      const applicationResponse:any = await apiClient.post("/portal/admission", registrationPayload);
 
-      setSubmitting(false);
-      setSubmitted(true);
-      setDirty(false);
-      setToast({
-        type: "success",
-        message: "Application submitted successfully.",
-      });
+      if(applicationResponse.data.studentId && applicationResponse.data.password){
+        setSubmitting(false);
+        setSubmitted(true);
+        setDirty(false);
+        setToast({
+          type: "success",
+          message: "Application submitted successfully.",
+        });
+      }
     },
     onClose: () => {
       setSubmitting(false);

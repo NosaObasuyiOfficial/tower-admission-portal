@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
 import { apiClient } from "../service/apiClient";
+import useAppNavigate from "./useAppNavigate";
 
 /* =============================================================================
    DESIGN TOKENS (shared with the rest of the Tower Prep portal)
@@ -235,6 +236,7 @@ export default function StudentLoginForm({ onLogin }: any) {
   const [authError, setAuthError] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
   const [shake, setShake] = useState(false);
+  const { goTo } = useAppNavigate();
 
   const {
     register,
@@ -267,14 +269,21 @@ export default function StudentLoginForm({ onLogin }: any) {
         // Demo fallback — replace with a real auth call via the onLogin prop.
         await new Promise((resolve) => setTimeout(resolve, 1200));
         // console.log("Login submitted:", { ...values, rememberMe });
-               
-        const rv = await apiClient.post("/portal/auth/login", values);       
-        console.log(rv);
 
+        const loginSuccess: any = await apiClient.post(
+          "/portal/auth/login",
+          values,
+        );
+
+        if (loginSuccess.status === 200) {
+          const studentDataId = loginSuccess.data.id;
+          goTo(`/student/data-page/${studentDataId}`);
+        }
       }
     } catch (err: any) {
-      const message:any =
-        err?.message ? "Invalid Student ID or Password. Please try again." : "Invalid Student ID or password. Please try again.";
+      const message: any = err?.message
+        ? "Invalid Student ID or Password. Please try again."
+        : "Invalid Student ID or password. Please try again.";
       setAuthError(message);
       setError("password", { message: " " }); // marks the field as errored without duplicating the banner text
       setShake(true);
