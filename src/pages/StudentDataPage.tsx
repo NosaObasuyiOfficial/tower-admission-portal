@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   User,
   MapPin,
@@ -579,14 +579,6 @@ function PaymentHistoryTable({ payments, data }: any) {
 
   return (
     <div>
-      {/* <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <div className="flex items-center gap-2">
-          <Wallet size={15} style={{ color: "var(--navy)" }} />
-          <span className="text-xs font-semibold" style={{ color: "var(--slate)" }}>Total Paid to Date</span>
-          <span className="text-sm font-bold" style={{ color: "var(--navy)" }}>{formatCurrency(totalPaid)}</span>
-        </div>
-      </div> */}
-
       <div className="flex justify-end mb-3">
         {data.status === "accepted" ? (
           <div className="tpa-no-print">
@@ -757,19 +749,6 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
     fetchStudentData();
   }, []);
 
-  const fullName = [
-    data.studentFirstName,
-    data.studentMiddleName,
-    data.studentLastName,
-  ]
-    .filter(Boolean)
-    .join(" ");
-  const age = useMemo(() => calcAge(data.studentDob), [data.studentDob]);
-  const statusCfg = STATUS_CONFIG[data.status] ?? STATUS_CONFIG.submitted;
-  const isMontessori = data.track === "montessori";
-  const hasGuardian2 =
-    data.guardian2Relation && data.guardian2Relation !== "None";
-
   const handlePayFees = () => {
     if (onPayFees) onPayFees(data);
     else console.log("Pay School Fees clicked for", data.id);
@@ -790,6 +769,22 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
   if (!data) {
     return <FallBackLoad />;
   }
+
+
+  const fullName = [
+    data.studentFirstName,
+    data.studentMiddleName,
+    data.studentLastName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  
+  const age = calcAge(data.studentDob);
+  const statusCfg = STATUS_CONFIG[data.status] ?? STATUS_CONFIG.submitted;
+  const isMontessori = data.track === "montessori";
+  const hasGuardian2 =
+    data.guardian2Relation && data.guardian2Relation !== "None";
+
 
   return (
     <div className="tpa-root min-h-screen overflow-x-hidden">
