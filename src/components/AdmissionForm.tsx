@@ -2545,9 +2545,9 @@ export default function AdmissionForm() {
             </span>
             .
           </p>
-          <p className="text-sm" style={{ color: "var(--slate)" }}>
+          {/* <p className="text-sm" style={{ color: "var(--slate)" }}>
             Our admissions team will reach out within 2 business days.
-          </p>
+          </p> */}
           <p className="text-sm mt-2 pb-7" style={{ color: "var(--brass)" }}>
             {`Check your email - ${formData.guardian1.email} for admission update.`}
           </p>
