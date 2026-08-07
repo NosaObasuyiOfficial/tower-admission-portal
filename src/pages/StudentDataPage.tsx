@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   User,
   MapPin,
@@ -25,6 +25,9 @@ import {
   Inbox,
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
+import { useParams } from "react-router-dom";
+import { apiClient } from "../service/apiClient";
+import FallBackLoad from "../components/FallBackLoad";
 
 const SCHOOL_TERM =
   import.meta.env.VITE_SCHOOL_TERM!.split("_").join(" ") ?? "";
@@ -257,57 +260,57 @@ export const Tokens = () => (
 /* =============================================================================
    SAMPLE DATA (matches the raw Admission DB row shape)
    ============================================================================= */
-const SAMPLE_STUDENT: any = {
-  id: "635a75ed-75c4-45b8-8f74-7d8b826fa964",
-  academicYear: "2026–2027",
-  admissionType: "new",
-  track: "primary",
-  grade: "nursery-two",
-  studentFirstName: "NOSA",
-  studentMiddleName: "CLEMENT",
-  studentLastName: "OBASUYI",
-  studentDob: "2021-07-23",
-  gender: "male",
-  address: {
-    city: "Benin City",
-    state: "Edo State",
-    street: "3, Abusomwan Avenue, Ekae II, Off Sapele Road, Benin City.",
-    postalCode: "300002",
-  },
-  previousSchool: "Winrose",
-  guardian1Relation: "Mother",
-  guardian1Name: "NOSA CLEMENT OBASUYI",
-  guardian1Phone: "081-0850-5829",
-  guardian1Email: "nosaclementobasuyi@gmail.com",
-  guardian1Occupation: "Hhh",
-  guardian2Relation: null,
-  guardian2Name: null,
-  guardian2Phone: null,
-  guardian2Email: null,
-  guardian2Occupation: null,
-  emergencyRelation: "Huhhhh",
-  emergencyPhone: "668-8855-7775",
-  allergies: null,
-  medicalConditions: null,
-  montessoriAttendedBefore: null,
-  montessoriInterest: null,
-  montessoriStrengths: null,
-  uploads: {
-    passport: null,
-    immunization: null,
-    academicRecords: null,
-    birthCertificate: null,
-  },
-  tuitionAgreement: true,
-  mediaRelease: "grant",
-  signatureMode: "draw",
-  signatureTypedName: null,
-  signatureImageUr: null,
-  signatureDate: "2026-07-30",
-  status: "submitted",
-  createdAt: "2026-07-30T09:25:11.859Z",
-  updatedAt: "2026-07-30T09:25:11.859Z",
-};
+// const SAMPLE_STUDENT: any = {
+//   id: "635a75ed-75c4-45b8-8f74-7d8b826fa964",
+//   academicYear: "2026–2027",
+//   admissionType: "new",
+//   track: "primary",
+//   grade: "nursery-two",
+//   studentFirstName: "NOSA",
+//   studentMiddleName: "CLEMENT",
+//   studentLastName: "OBASUYI",
+//   studentDob: "2021-07-23",
+//   gender: "male",
+//   address: {
+//     city: "Benin City",
+//     state: "Edo State",
+//     street: "3, Abusomwan Avenue, Ekae II, Off Sapele Road, Benin City.",
+//     postalCode: "300002",
+//   },
+//   previousSchool: "Winrose",
+//   guardian1Relation: "Mother",
+//   guardian1Name: "NOSA CLEMENT OBASUYI",
+//   guardian1Phone: "081-0850-5829",
+//   guardian1Email: "nosaclementobasuyi@gmail.com",
+//   guardian1Occupation: "Hhh",
+//   guardian2Relation: null,
+//   guardian2Name: null,
+//   guardian2Phone: null,
+//   guardian2Email: null,
+//   guardian2Occupation: null,
+//   emergencyRelation: "Huhhhh",
+//   emergencyPhone: "668-8855-7775",
+//   allergies: null,
+//   medicalConditions: null,
+//   montessoriAttendedBefore: null,
+//   montessoriInterest: null,
+//   montessoriStrengths: null,
+//   uploads: {
+//     passport: null,
+//     immunization: null,
+//     academicRecords: null,
+//     birthCertificate: null,
+//   },
+//   tuitionAgreement: true,
+//   mediaRelease: "grant",
+//   signatureMode: "draw",
+//   signatureTypedName: null,
+//   signatureImageUr: null,
+//   signatureDate: "2026-07-30",
+//   status: "submitted",
+//   createdAt: "2026-07-30T09:25:11.859Z",
+//   updatedAt: "2026-07-30T09:25:11.859Z",
+// };
 
 const payments = [
   {
@@ -541,7 +544,7 @@ function DocRow({ label, file }: any) {
   );
 }
 
-function PaymentHistoryTable({ payments }: any) {
+function PaymentHistoryTable({ payments, data }: any) {
   // const totalPaid = payments
   //   .filter((p:any) => (p.paymentStatus || "").toUpperCase() === "PAID")
   //   .reduce((sum:any, p:any) => sum + (p.paymentAmount || 0), 0);
@@ -585,12 +588,12 @@ function PaymentHistoryTable({ payments }: any) {
       </div> */}
 
       <div className="flex justify-end mb-3">
-        {SAMPLE_STUDENT.status === "accepted" ? (
+        {data.status === "accepted" ? (
           <div className="tpa-no-print">
             <button
               type="button"
               onClick={handlePayFees}
-              disabled={SAMPLE_STUDENT.status === "accepted" ? false : true}
+              disabled={data.status === "accepted" ? false : true}
               className="tpa-btn-primary"
               style={{ whiteSpace: "nowrap" }}
             >
@@ -724,11 +727,36 @@ function PaymentHistoryTable({ payments }: any) {
 /* =============================================================================
    MAIN PAGE
    ============================================================================= */
-export default function StudentDataPage({
-  data = SAMPLE_STUDENT,
-  onPayFees,
-  onDownload,
-}: any) {
+export default function StudentDataPage({ onPayFees, onDownload }: any) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState("");
+  const [data, setData] = useState<any | null>(null);
+  const { studentDataId } = useParams();
+
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        setLoading(true);
+
+        const res: any = await apiClient.get(
+          `/portal/application/${studentDataId}`,
+        );
+
+        if (res.data.success) {
+          setData(res.data.data);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      } catch (err: any) {
+        setLoading(false);
+        setError(err.response?.data?.message ?? "Unable to get student data.");
+      }
+    };
+
+    fetchStudentData();
+  }, []);
+
   const fullName = [
     data.studentFirstName,
     data.studentMiddleName,
@@ -751,6 +779,18 @@ export default function StudentDataPage({
     else window.print();
   };
 
+  if (loading) {
+    return <FallBackLoad />;
+  }
+
+  if (error) {
+    return <FallBackLoad />;
+  }
+
+  if (!data) {
+    return <FallBackLoad />;
+  }
+
   return (
     <div className="tpa-root min-h-screen overflow-x-hidden">
       <Tokens />
@@ -762,7 +802,6 @@ export default function StudentDataPage({
               className="rounded-lg flex items-center justify-center"
               style={{ width: 64, height: 64 }}
             >
-
               <img
                 className="w-13 h-13 bg-white rounded-full"
                 src={Logo}
@@ -850,7 +889,9 @@ export default function StudentDataPage({
                   disabled={data.status === "accepted" ? true : true}
                   className="tpa-btn-primary"
                   style={{ whiteSpace: "nowrap" }}
-                > Academic portal
+                >
+                  {" "}
+                  Academic portal
                 </button>
               </div>
             ) : null}
@@ -1085,6 +1126,7 @@ export default function StudentDataPage({
             <PaymentHistoryTable
               payments={payments}
               onPayFees={handlePayFees}
+              data={data}
             />
           </SectionCard>
         </div>

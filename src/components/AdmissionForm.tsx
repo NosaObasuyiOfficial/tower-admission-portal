@@ -2485,7 +2485,9 @@ export default function AdmissionForm() {
         reference,
         payload: formData,
       };
-      await apiClient.post("/portal/admission", registrationPayload);
+
+      const rv = await apiClient.post("/portal/admission", registrationPayload);
+        console.log(rv.data)
 
       setSubmitting(false);
       setSubmitted(true);

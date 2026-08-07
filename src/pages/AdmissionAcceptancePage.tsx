@@ -8,7 +8,7 @@ import Logo from "../assets/images/towerlogo.png";
 import { apiClient } from "../service/apiClient";
 import { useParams } from "react-router-dom";
 import { transformData } from "../utilities/helperFunction";
-import FallbackLoad from "../components/FallBackLoad";
+import FallBackLoad from "../components/FallBackLoad";
 
 function ReviewSection({ title, children }: any) {
   return (
@@ -62,15 +62,15 @@ function AdmissionAcceptancePage() {
   };
 
   if (loading) {
-    return <FallbackLoad />;
+    return <FallBackLoad />;
   }
 
   if (error) {
-    return <FallbackLoad />;
+    return <FallBackLoad />;
   }
 
   if (!g) {
-    return <FallbackLoad />;
+    return <FallBackLoad />;
   }
 
   const gradeLabel = GRADE_OPTIONS.find(
