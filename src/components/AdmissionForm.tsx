@@ -2574,7 +2574,7 @@ export default function AdmissionForm() {
           onClick={() => goTo("/student/portal")}
           className="tpa-btn-portal"
         >
-         Log in Student Portal <MoveRightIcon size={15} />
+         Sign in Student Portal <MoveRightIcon size={15} />
         </button>
       </div>
 
