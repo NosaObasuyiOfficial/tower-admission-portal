@@ -92,8 +92,6 @@ function AdmissionAcceptancePage() {
       { studentDataId },
     );
 
-    console.log(acceptnResponse)
-
     if (acceptnResponse.status === 200) {
       setSubmitting(false);
       const res = await getAdmissionData();
