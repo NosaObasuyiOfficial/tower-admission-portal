@@ -30,14 +30,18 @@ function AdmissionAcceptancePage() {
   const { admissionNo } = useParams();
   const [submitting, setSubmitting] = useState(false);
 
+  async function getAdmissionData() {
+    const res: any = await apiClient.get(`/portal/student/${admissionNo}`);
+
+    return res;
+  }
+
   useEffect(() => {
     const fetchApplication = async () => {
       try {
         setLoading(true);
 
-        const res: any = await apiClient.get(
-          `/portal/student/${admissionNo}`,
-        );
+        const res = await getAdmissionData();
 
         if (res.data.success) {
           setG(transformData(res.data.data));
@@ -79,6 +83,26 @@ function AdmissionAcceptancePage() {
   const uploadedCount = UPLOAD_SPECS.filter(
     (s) => g.uploads[s.key] && !g.uploads[s.key].error,
   ).length;
+
+  async function acceptBuuton() {
+    setSubmitting(true);
+
+    const studentDataId = g.id;
+
+    const acceptnResponse: any = await apiClient.post(
+      "/portal/admission/accept",
+      { studentDataId },
+    );
+
+    if (acceptnResponse.status === 200) {
+      setSubmitting(false);
+      const res = await getAdmissionData();
+
+      if (res.data.success) {
+        setG(transformData(res.data.data));
+      }
+    }
+  }
 
   return (
     <>
@@ -208,8 +232,8 @@ function AdmissionAcceptancePage() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              // onClick={}
-              onClick={() => setSubmitting(true)}
+              onClick={() => acceptBuuton()}
+              disabled={g.status === "accepted"}
               className={`tpa-no-print ${g.status === "submitted" ? "tpa-btn-primary" : ""}`}
             >
               {submitting ? (
