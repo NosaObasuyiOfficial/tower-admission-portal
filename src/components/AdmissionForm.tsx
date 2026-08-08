@@ -347,7 +347,7 @@ const STEP_DEFS = [
   },
   {
     id: "uploads",
-    title: "Documents",
+    title: "Documents (Skip this step)",
     desc: "Upload the required paperwork.",
     icon: FolderCheck,
   },
