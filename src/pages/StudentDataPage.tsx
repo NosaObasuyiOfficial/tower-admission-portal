@@ -23,6 +23,7 @@ import {
   AlertCircle,
   Receipt,
   Inbox,
+  Loader2
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
 import { useParams } from "react-router-dom";
@@ -312,7 +313,7 @@ export const Tokens = () => (
 //   updatedAt: "2026-07-30T09:25:11.859Z",
 // };
 
-const payments:any = [
+const payments: any = [
   // {
   //   id: "1",
   //   paymentReference: "TPA-2026-000482",
@@ -770,7 +771,6 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
     return <FallBackLoad />;
   }
 
-
   const fullName = [
     data.studentFirstName,
     data.studentMiddleName,
@@ -778,13 +778,12 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
   ]
     .filter(Boolean)
     .join(" ");
-  
+
   const age = calcAge(data.studentDob);
   const statusCfg = STATUS_CONFIG[data.status] ?? STATUS_CONFIG.submitted;
   const isMontessori = data.track === "montessori";
   const hasGuardian2 =
     data.guardian2Relation && data.guardian2Relation !== "None";
-
 
   return (
     <div className="tpa-root min-h-screen overflow-x-hidden">
@@ -806,7 +805,7 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
             <div>
               <p
                 className="tpa-serif"
-                style={{ fontSize: 20, color: "var(--navy)" }}
+                style={{ fontSize: 18, color: "var(--navy)" }}
               >
                 Tower Preparatory Academy
               </p>
@@ -815,14 +814,25 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
               </p>
             </div>
           </div>
+          <div className="w-full md:w-auto flex justify-end">
           <button
             type="button"
             onClick={handleDownload}
-            className="tpa-btn-ghost tpa-no-print"
+            className="tpa-btn-ghost tpa-no-print md:mt-0 mt-2"
           >
             <Download size={14} /> Download
           </button>
+          </div>
         </div>
+
+        {data.status === "accepted" ? null: (
+          <p
+            className="leading-4 pb-2 flex flex-nowrap gap-2"
+            style={{ fontSize: 18, color: "var(--navy)" }}
+          >
+            <Loader2 size={18} className="animate-spin" /> Reviewing application...
+          </p>
+        ) }
 
         {/* Hero */}
         <div className="tpa-card tpa-anim-enter p-6 sm:p-8 mb-6">
