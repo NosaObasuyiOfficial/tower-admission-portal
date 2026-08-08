@@ -1753,12 +1753,12 @@ function StepProgram({ data, setField, errors }: any) {
           {
             value: "montessori",
             label: "Montessori",
-            sub: "Child-led, mixed-age classrooms",
+            sub: "Toddler, Creche, Nursery 1 - 3",
           },
           {
-            value: "primary",
-            label: "Primary School",
-            sub: "Traditional grade-level curriculum",
+            value: "upper school",
+            label: "Upper School",
+            sub: "Primary 1 - 5, Jss 1 - 3",
           },
         ]}
         error={errors.track}

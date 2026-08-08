@@ -866,7 +866,7 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
                   ) : (
                     <GraduationCap size={12} />
                   )}{" "}
-                  {isMontessori ? "Montessori" : "Primary School"}
+                  {isMontessori ? "Montessori" : "Upper School"}
                 </Pill>
                 <Pill bg="var(--border-soft)" fg="var(--ink)">
                   {prettify(data.grade)}
