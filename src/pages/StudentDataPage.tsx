@@ -557,7 +557,7 @@ function PaymentHistoryTable({ payments, data }: any) {
   if (!payments || payments.length === 0) {
     return (
       <div>
-        <div className="flex justify-end mb-3">
+        <div className="flex justify-end mb-1">
           {data.status === "accepted" ? (
             <div className="tpa-no-print">
               <button
