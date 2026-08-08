@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const transformData = (apiData: any) => {
   const transformedData = {
+    studentDataId: apiData.id,
+    
     program: {
       academicYear: apiData.academicYear,
       admissionType: apiData.admissionType,

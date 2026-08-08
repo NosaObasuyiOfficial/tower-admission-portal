@@ -32,7 +32,6 @@ function AdmissionAcceptancePage() {
 
   async function getAdmissionData() {
     const res: any = await apiClient.get(`/portal/student/${admissionNo}`);
-
     return res;
   }
 
@@ -40,7 +39,6 @@ function AdmissionAcceptancePage() {
     const fetchApplication = async () => {
       try {
         setLoading(true);
-
         const res = await getAdmissionData();
 
         if (res.data.success) {
@@ -87,12 +85,14 @@ function AdmissionAcceptancePage() {
   async function acceptBuuton() {
     setSubmitting(true);
 
-    const studentDataId = g.id;
+    const studentDataId = g.studentDataId;
 
     const acceptnResponse: any = await apiClient.post(
       "/portal/admission/accept",
       { studentDataId },
     );
+
+    console.log(acceptnResponse)
 
     if (acceptnResponse.status === 200) {
       setSubmitting(false);
