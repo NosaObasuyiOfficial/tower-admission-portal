@@ -23,7 +23,7 @@ import {
   AlertCircle,
   Receipt,
   Inbox,
-  Loader2
+  Loader2,
 } from "lucide-react";
 import Logo from "../assets/images/towerlogo.png";
 import { useParams } from "react-router-dom";
@@ -556,24 +556,42 @@ function PaymentHistoryTable({ payments, data }: any) {
 
   if (!payments || payments.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center text-center py-10">
-        <div
-          className="rounded-full flex items-center justify-center mb-3"
-          style={{
-            width: 44,
-            height: 44,
-            background: "var(--border-soft)",
-            color: "var(--slate-light)",
-          }}
-        >
-          <Inbox size={20} />
+      <div>
+        <div className="flex justify-end mb-3">
+          {data.status === "accepted" ? (
+            <div className="tpa-no-print">
+              <button
+                type="button"
+                onClick={handlePayFees}
+                disabled={data.status === "accepted" ? false : true}
+                className="tpa-btn-primary"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                <CreditCard size={15} /> Pay School Fees
+              </button>
+            </div>
+          ) : null}
         </div>
-        <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
-          No payments recorded yet
-        </p>
-        <p className="text-xs mt-1" style={{ color: "var(--slate)" }}>
-          School fee payments will appear here once made.
-        </p>
+
+        <div className="flex flex-col items-center justify-center text-center py-10">
+          <div
+            className="rounded-full flex items-center justify-center mb-3"
+            style={{
+              width: 44,
+              height: 44,
+              background: "var(--border-soft)",
+              color: "var(--slate-light)",
+            }}
+          >
+            <Inbox size={20} />
+          </div>
+          <p className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+            No payments recorded yet
+          </p>
+          <p className="text-xs mt-1" style={{ color: "var(--slate)" }}>
+            School fee payments will appear here once made.
+          </p>
+        </div>
       </div>
     );
   }
@@ -815,24 +833,25 @@ export default function StudentDataPage({ onPayFees, onDownload }: any) {
             </div>
           </div>
           <div className="w-full md:w-auto flex justify-end">
-          <button
-            type="button"
-            onClick={handleDownload}
-            className="tpa-btn-ghost tpa-no-print md:mt-0 mt-2"
-          >
-            <Download size={14} /> Download
-          </button>
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="tpa-btn-ghost tpa-no-print md:mt-0 mt-2"
+            >
+              <Download size={14} /> Download
+            </button>
           </div>
         </div>
 
-        {data.status === "accepted" ? null: (
+        {data.status === "accepted" ? null : (
           <p
             className="leading-4 pb-2 flex flex-nowrap gap-2"
             style={{ fontSize: 18, color: "var(--navy)" }}
           >
-            <Loader2 size={18} className="animate-spin" /> Reviewing application...
+            <Loader2 size={18} className="animate-spin" /> Reviewing
+            application...
           </p>
-        ) }
+        )}
 
         {/* Hero */}
         <div className="tpa-card tpa-anim-enter p-6 sm:p-8 mb-6">
