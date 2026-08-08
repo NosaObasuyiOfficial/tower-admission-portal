@@ -2073,7 +2073,7 @@ function StepMontessori({ data, setField, errors }: any) {
       <div className="grid gap-5">
         <TextAreaField
           id="interest"
-          label="Why is your family interested in Montessori?"
+          label="Why is your family interested in Montessori? (OPTIONAL)"
           rows={5}
           value={data.interest}
           onChange={(v: any) => setField("montessori.interest", v)}
@@ -2081,7 +2081,7 @@ function StepMontessori({ data, setField, errors }: any) {
         />
         <TextAreaField
           id="strengths"
-          label="Describe your child's strengths, interests, and independence."
+          label="Describe your child's strengths, interests, and independence. (OPTIONAL)"
           rows={5}
           value={data.strengths}
           onChange={(v: any) => setField("montessori.strengths", v)}
